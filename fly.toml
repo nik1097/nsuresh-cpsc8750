@@ -1,6 +1,6 @@
-# fly.toml file generated for clemson-nsuresh97 on 2022-09-30T19:02:01-04:00
+# fly.toml file generated for clemson-nsuresh on 2022-09-30T19:10:25-04:00
 
-app = "clemson-nsuresh97"
+app = "clemson-nsuresh"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
