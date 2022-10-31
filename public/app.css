@@ -2,3 +2,34 @@ body {
     background-color: black;
     color: white;
   }
+ol.a {
+    list-style-type: square;
+    font-size: 20px;
+    font-family: cursive;
+    background-color: rgb(254, 255, 255);
+    color: rgb(255, 0, 0);
+    opacity: 0.9;
+  }
+h1 {
+    padding-top: 10px;
+    text-align: center;
+    font-size: 30px;
+    font-family: cursive;
+    background-color: teal;
+    color: yellow;
+    opacity: 0.9;
+ }
+p {
+  font-size: 20px;
+  font-family: cursive;
+  background-color: teal;
+  color: yellow;
+  opacity: 0.9;
+}
+footer {
+  font-size: 20px;
+  font-family: cursive;
+  background-color: teal;
+  color: yellow;
+  opacity: 0.9;
+}

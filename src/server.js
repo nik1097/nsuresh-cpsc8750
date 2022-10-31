@@ -1,6 +1,7 @@
 // use the express library
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const fetch = require('node-fetch');
 
 // create a new server application
 const app = express();
@@ -27,6 +28,48 @@ app.set('view engine', 'ejs');
 app.use(cookieParser());
 
 let nextVisitorId = 1;
+
+app.get("/trivia", async (req, res) => {
+  // fetch the data
+  const response = await fetch("https://opentdb.com/api.php?amount=1&type=multiple");
+
+  // fail if bad response
+  if (!response.ok) {
+    res.status(500);
+    res.send(`Open Trivia Database failed with HTTP code ${response.status}`);
+    return;
+  }
+
+  // interpret the body as json
+  const content = await response.json();
+
+  // fail if db failed
+  if (content.response_code !== 0) {
+    res.status(500);
+    res.send(`Open Trivia Database failed with internal response code ${content.response_code}`);
+    return;
+  }
+  answers = content['results'][0]['incorrect_answers']
+  correctAnswer = content['results'][0]['correct_answer']
+  // console.log(correctAnswer)
+  // adding the answer to the array at random position
+  answers.splice(Math.floor(Math.random() * answers.length), 0, correctAnswer)
+
+  const answerLinks = answers.map(answer => {
+    return `<a style='color: red' href="javascript:alert('${
+      answer === correctAnswer ? 'Correct!' : 'Incorrect, Please Try Again!'
+      }')">${answer}</a>`
+  })
+
+  data = {
+          'question' : content['results'][0]['question'],
+          'answers' : answerLinks,
+          'category' : content['results'][0]['category'],
+          'difficulty' : content['results'][0]['difficulty']
+        }
+  res.render('trivia', data)
+});
+
 app.get('/', (req, res) => {
   let lastVisit = req.cookies.visited;
   let visitorId = req.cookies.visitorId;
